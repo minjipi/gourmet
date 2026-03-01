@@ -628,6 +628,67 @@
       line-height: 1.3;
     }
 
+    .card-name-link {
+      color: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.15s;
+    }
+    .card-name-link:hover {
+      color: var(--accent);
+    }
+    .naver-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 17px;
+      height: 17px;
+      background: #03C75A;
+      border-radius: 3px;
+      flex-shrink: 0;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .card-name-link:hover .naver-badge {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .naver-badge svg {
+      width: 10px;
+      height: 10px;
+      fill: white;
+    }
+
+    .modal-naver-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.1rem;
+      padding: 0.5rem 1rem;
+      background: #03C75A;
+      color: #fff;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .modal-naver-btn:hover {
+      background: #02a84c;
+      transform: translateY(-1px);
+    }
+    .modal-naver-btn svg {
+      width: 13px;
+      height: 13px;
+      fill: white;
+      flex-shrink: 0;
+    }
+
     .stars {
       color: var(--accent);
       font-size: 0.78rem;
@@ -892,41 +953,26 @@
 
     /* Back to top */
     .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 400;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      border: 1px solid rgba(252, 96, 45, 0.5);
-      border-radius: 50%;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding: 0.7rem 1.5rem;
+      border: 1px solid rgba(252, 96, 45, 0.3);
       color: var(--accent);
-      font-size: 1.1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 4px 16px rgba(252, 96, 45, 0.15);
+      background: transparent;
+      font-family: 'Noto Sans KR', sans-serif;
       transition: all 0.2s;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(10px);
-    }
-
-    .back-to-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
     }
 
     .back-to-top:hover {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
-      box-shadow: 0 6px 20px rgba(252, 96, 45, 0.35);
     }
 
     /* ── PAGE VIEW MODES ── */
@@ -1369,10 +1415,8 @@
     <p><strong>식당 · 카페 · 술집 큐레이션 가이드</strong></p>
     <p>by 법학전문대학원 15기 이영우 (한국외국어대학교 Language&amp;Diplomacy 16학번)</p>
     <p style="margin-top:0.5rem; font-size:0.65rem;">2025년 3월 업데이트 · 개인 취향 기반 리스트이므로 입맛에 따라 다를 수 있습니다</p>
+    <button class="back-to-top" onclick="showView('list')">↑ &nbsp; 맨 위로</button>
   </footer>
-
-  <!-- FIXED BACK TO TOP -->
-  <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="맨 위로">↑</button>
 
   <!-- MODAL -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
@@ -1381,6 +1425,10 @@
         <p class="modal-eyebrow" id="m-genre"></p>
         <h2 class="modal-name" id="m-name"></h2>
         <p class="modal-stars" id="m-stars"></p>
+        <a class="modal-naver-btn" id="m-naver" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 12.4L10.3 7H7v10h3.5v-5.4l3.3 5.4H17V7h-3.5z"/></svg>
+          네이버 지도에서 보기
+        </a>
         <button class="modal-close" onclick="closeModalDirect()">✕</button>
       </div>
       <div class="modal-body">
@@ -1554,10 +1602,14 @@
     }
 
     function cardHTML(d) {
+      const naverUrl = `https://map.naver.com/p/search/${encodeURIComponent(d.name)}?c=15.00,0,0,2,dh`;
       return `
     <div class="card" onclick="openModal(${JSON.stringify(d).replace(/"/g, '&quot;')})">
       <div class="card-top">
-        <div class="card-name">${d.name}</div>
+        <div class="card-name">
+          <a class="card-name-link" href="${naverUrl}" target="_blank" rel="noopener"
+            onclick="event.stopPropagation()">${d.name}<span class="naver-badge"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 12.4L10.3 7H7v10h3.5v-5.4l3.3 5.4H17V7h-3.5z"/></svg></span></a>
+        </div>
         <div class="stars">${d.stars}</div>
       </div>
       <div class="card-meta">
@@ -1580,9 +1632,11 @@
 
     // ── MODAL ───────────────────────────────────────────────────────
     function openModal(d) {
+      const naverUrl = `https://map.naver.com/p/search/${encodeURIComponent(d.name)}?c=15.00,0,0,2,dh`;
       document.getElementById('m-genre').textContent = d.genre + ' · ' + d.loc;
       document.getElementById('m-name').textContent = d.name;
       document.getElementById('m-stars').textContent = d.stars || '(별점 없음)';
+      document.getElementById('m-naver').href = naverUrl;
       document.getElementById('m-info').innerHTML = `
     <div class="modal-info-item"><span class="modal-info-label">장르</span><span class="modal-info-value">${d.genre}</span></div>
     <div class="modal-info-item"><span class="modal-info-label">위치</span><span class="modal-info-value">${d.loc}</span></div>
@@ -1674,10 +1728,6 @@
       // Navbar shadow
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
 
-      // Back to top button visibility
-      const btn = document.getElementById('backToTop');
-      if (btn) btn.classList.toggle('visible', window.scrollY > 300);
-
       // Update area button based on scroll position
       ['이문동', '회기', '청량리'].forEach(area => {
         const el = document.getElementById('area-' + area);
@@ -1691,10 +1741,6 @@
         }
       });
     });
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
     // ── INTERSECTION OBSERVER ───────────────────────────────────────
     const observer = new IntersectionObserver((entries) => {
