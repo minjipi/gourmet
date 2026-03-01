@@ -636,9 +636,11 @@
       gap: 0.35rem;
       transition: color 0.15s;
     }
+
     .card-name-link:hover {
       color: var(--accent);
     }
+
     .naver-badge {
       display: inline-flex;
       align-items: center;
@@ -652,10 +654,12 @@
       transform: translateX(-4px);
       transition: opacity 0.15s, transform 0.15s;
     }
+
     .card-name-link:hover .naver-badge {
       opacity: 1;
       transform: translateX(0);
     }
+
     .naver-badge svg {
       width: 10px;
       height: 10px;
@@ -678,10 +682,12 @@
       border-radius: 3px;
       transition: background 0.15s, transform 0.15s;
     }
+
     .modal-naver-btn:hover {
       background: #02a84c;
       transform: translateY(-1px);
     }
+
     .modal-naver-btn svg {
       width: 13px;
       height: 13px;
@@ -1180,7 +1186,7 @@
 
   <!-- Intro Loading Overlay -->
   <div class="intro-overlay" id="introOverlay">
-    <div class="intro-overlay-text">이문동 10년차의 <br>이문·회기·청량리 맛집 리스트</div>
+    <div class="intro-overlay-text">이문동 10년차의 <br>이문·회기·청량리 <br>맛집 리스트</div>
   </div>
 
   <!-- Scroll Progress -->
@@ -1426,7 +1432,9 @@
         <h2 class="modal-name" id="m-name"></h2>
         <p class="modal-stars" id="m-stars"></p>
         <a class="modal-naver-btn" id="m-naver" href="#" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 12.4L10.3 7H7v10h3.5v-5.4l3.3 5.4H17V7h-3.5z"/></svg>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.5 12.4L10.3 7H7v10h3.5v-5.4l3.3 5.4H17V7h-3.5z" />
+          </svg>
           네이버 지도에서 보기
         </a>
         <button class="modal-close" onclick="closeModalDirect()">✕</button>
