@@ -1075,18 +1075,41 @@
         gap: 1rem;
       }
 
-      .map-title {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-      }
+      @media (max-width: 640px) {
+        .map-section {
+          padding: 1.5rem 1rem 1rem;
+          /* 상하 패딩을 더 축소 */
+          max-height: 40vh;
+          /* 높이를 화면의 40% 수준으로 줄임 */
+          min-height: auto;
+        }
 
-      .area-btn {
-        padding: 0.7rem 1rem;
-      }
+        .map-title {
+          font-size: 0.9rem;
+          /* 제목 크기 축소 */
+          margin-bottom: 0.5rem;
+        }
 
-      /* 모바일: area-section 상단 패딩 줄여서 헤더가 일부 보이게 */
-      .area-section {
-        padding: 2.5rem 1rem 3rem;
+        .area-buttons {
+          gap: 0.3rem;
+          /* 버튼 사이 간격 축소 */
+        }
+
+        .area-btn {
+          padding: 0.5rem 0.8rem;
+          /* 버튼 크기 축소 */
+        }
+
+        .area-section {
+          padding: 1.5rem 1rem 3rem;
+          /* 상단 여백을 줄여 콘텐츠가 더 위로 올라오게 함 */
+        }
+
+        /* 첫 번째 섹션의 애니메이션을 즉시 보이게 처리 (선택 사항) */
+        #area-이문동.fade-in-section {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     }
   </style>
