@@ -438,8 +438,8 @@
 
     /* Area Section */
     .area-section {
-      padding: 5rem 2rem;
-      border-bottom: 4px solid var(--border);
+      padding: 3rem 2rem 5rem;
+      border-bottom: none;
     }
 
     .area-section-inner {
@@ -451,8 +451,8 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
       gap: 1rem;
@@ -495,43 +495,96 @@
       margin-top: 0.4rem;
     }
 
-    /* Filter bar */
-    .filter-bar {
+    /* ── TAB + UNIFIED FILTER BAR ── */
+    .tab-filter-bar {
+      position: sticky;
+      top: 60px;
+      z-index: 200;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Region tabs */
+    .region-tabs {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .region-tab {
+      flex: 1;
+      padding: 0.9rem 1rem;
+      border: none;
+      background: transparent;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .region-tab .tab-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.85rem;
+      color: var(--border2);
+      transition: color 0.2s;
+    }
+
+    .region-tab:hover {
+      color: var(--ink);
+    }
+
+    .region-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .region-tab.active .tab-num {
+      color: var(--accent);
+    }
+
+    /* Category filters */
+    .cat-filter-row {
       display: flex;
       gap: 0.4rem;
       flex-wrap: wrap;
       align-items: center;
-      position: sticky;
-      top: 60px;
-      z-index: 100;
-      background: var(--paper);
-      padding: 0.9rem 0;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-      margin-left: -0.5rem;
-      margin-right: -0.5rem;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.7rem 2rem;
     }
 
     .filter-label {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--muted2);
       letter-spacing: 0.2em;
-      margin-right: 0.4rem;
+      margin-right: 0.2rem;
       text-transform: uppercase;
+      flex-shrink: 0;
     }
 
     .filter-btn {
-      padding: 0.35rem 0.9rem;
+      padding: 0.3rem 0.85rem;
       border: 1px solid var(--border);
       background: transparent;
       font-family: 'Noto Sans KR', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       cursor: pointer;
       color: var(--muted);
       transition: all 0.15s;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
 
     .filter-btn:hover {
@@ -543,6 +596,15 @@
       background: var(--accent);
       color: #fff;
       border-color: var(--accent);
+    }
+
+    /* Tab panels */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
     }
 
     /* Category group */
@@ -959,26 +1021,34 @@
 
     /* Back to top */
     .back-to-top {
-      display: inline-flex;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 400;
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
-      padding: 0.7rem 1.5rem;
-      border: 1px solid rgba(252, 96, 45, 0.3);
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(252, 96, 45, 0.5);
+      border-radius: 50%;
       color: var(--accent);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      font-size: 1.1rem;
       cursor: pointer;
-      background: transparent;
-      font-family: 'Noto Sans KR', sans-serif;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(252, 96, 45, 0.15);
       transition: all 0.2s;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
     }
 
-    .back-to-top:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
     }
 
     /* ── PAGE VIEW MODES ── */
@@ -1001,10 +1071,12 @@
     body.intro-mode .map-section,
     body.intro-mode .section-divider,
     body.intro-mode .scroll-content,
+    body.intro-mode .tab-filter-bar,
     body.intro-mode footer,
     body.about-mode .map-section,
     body.about-mode .section-divider,
     body.about-mode .scroll-content,
+    body.about-mode .tab-filter-bar,
     body.about-mode footer {
       display: none;
     }
@@ -1178,6 +1250,20 @@
           transform: translateY(0);
         }
       }
+
+      .region-tabs {
+        padding: 0 1rem;
+      }
+
+      .cat-filter-row {
+        padding: 0.6rem 1rem;
+      }
+
+      .region-tab {
+        font-size: 0.72rem;
+        padding: 0.75rem 0.5rem;
+        gap: 0.3rem;
+      }
     }
   </style>
 </head>
@@ -1258,13 +1344,13 @@
       <div class="map-title-block">
         <h2 class="map-title">지역 선택</h2>
         <div class="area-buttons">
-          <button class="area-btn" data-area="이문동" onclick="scrollToArea('이문동'); setAreaActive(this)">
+          <button class="area-btn" data-area="이문동" onclick="switchTab('이문동'); setAreaActive(this)">
             <span class="area-num">01</span> 이문동
           </button>
-          <button class="area-btn" data-area="회기" onclick="scrollToArea('회기'); setAreaActive(this)">
+          <button class="area-btn" data-area="회기" onclick="switchTab('회기'); setAreaActive(this)">
             <span class="area-num">02</span> 회기
           </button>
-          <button class="area-btn" data-area="청량리" onclick="scrollToArea('청량리'); setAreaActive(this)">
+          <button class="area-btn" data-area="청량리" onclick="switchTab('청량리'); setAreaActive(this)">
             <span class="area-num">03</span> 청량리
           </button>
         </div>
@@ -1286,17 +1372,17 @@
         <!-- Region: 이문동 -->
         <polygon id="region-이문동" class="map-region" points="65,35 185,28 195,165 75,175" fill="rgba(252,96,45,0.07)"
           stroke="#3a2520" stroke-width="1" style="cursor:pointer" onmouseover="mapHover('이문동')"
-          onmouseout="mapUnhover('이문동')" onclick="scrollToArea('이문동'); syncAreaBtn('이문동')" />
+          onmouseout="mapUnhover('이문동')" onclick="switchTab('이문동')" />
 
         <!-- Region: 회기 -->
         <polygon id="region-회기" class="map-region" points="75,175 195,165 185,295 70,305" fill="rgba(252,96,45,0.07)"
           stroke="#3a2520" stroke-width="1" style="cursor:pointer" onmouseover="mapHover('회기')"
-          onmouseout="mapUnhover('회기')" onclick="scrollToArea('회기'); syncAreaBtn('회기')" />
+          onmouseout="mapUnhover('회기')" onclick="switchTab('회기')" />
 
         <!-- Region: 청량리 -->
         <polygon id="region-청량리" class="map-region" points="40,305 170,295 160,385 30,395" fill="rgba(252,96,45,0.07)"
           stroke="#3a2520" stroke-width="1" style="cursor:pointer" onmouseover="mapHover('청량리')"
-          onmouseout="mapUnhover('청량리')" onclick="scrollToArea('청량리'); syncAreaBtn('청량리')" />
+          onmouseout="mapUnhover('청량리')" onclick="switchTab('청량리')" />
 
         <!-- Dots -->
         <circle cx="130" cy="100" r="5" fill="rgba(252,96,45,0.9)" />
@@ -1328,11 +1414,29 @@
     </div>
   </div>
 
-  <!-- INFINITE SCROLL CONTENT -->
+  <!-- TAB + FILTER BAR -->
+  <div class="tab-filter-bar" id="tabFilterBar">
+    <div class="region-tabs">
+      <button class="region-tab active" id="tab-이문동" onclick="switchTab('이문동')">
+        <span class="tab-num">01</span> 이문동
+      </button>
+      <button class="region-tab" id="tab-회기" onclick="switchTab('회기')">
+        <span class="tab-num">02</span> 회기
+      </button>
+      <button class="region-tab" id="tab-청량리" onclick="switchTab('청량리')">
+        <span class="tab-num">03</span> 청량리
+      </button>
+    </div>
+    <div class="cat-filter-row" id="cat-filter-row">
+      <span class="filter-label">필터</span>
+      <!-- buttons injected by JS -->
+    </div>
+  </div>
+
+  <!-- TAB PANELS -->
   <div class="scroll-content" id="content">
 
-    <!-- 이문동 Section -->
-    <section class="area-section fade-in-section" id="area-이문동">
+    <section class="tab-panel area-section active" id="area-이문동">
       <div class="area-section-inner">
         <div class="area-section-header">
           <div class="area-num-big">01</div>
@@ -1342,32 +1446,11 @@
             <p class="area-count" id="count-이문동">— 개의 장소</p>
           </div>
         </div>
-        <div class="filter-bar">
-          <span class="filter-label">필터:</span>
-          <button class="filter-btn active" onclick="filterCards(this,'이문동','all')">전체</button>
-          <button class="filter-btn" onclick="filterCards(this,'이문동','한식')">한식</button>
-          <button class="filter-btn" onclick="filterCards(this,'이문동','중식')">중식</button>
-          <button class="filter-btn" onclick="filterCards(this,'이문동','양식')">양식</button>
-          <button class="filter-btn" onclick="filterCards(this,'이문동','일식')">일식</button>
-          <button class="filter-btn" onclick="filterCards(this,'이문동','고기')">고기·해산물</button>
-          <button class="filter-btn" onclick="filterCards(this,'이문동','카페')">카페·베이커리</button>
-          <button class="filter-btn" onclick="filterCards(this,'이문동','주점')">주점</button>
-        </div>
         <div id="cards-이문동" class="cards-grid"></div>
       </div>
     </section>
 
-    <!-- Marquee Divider -->
-    <div class="section-divider">
-      <div class="section-divider-text">
-        회기 &nbsp;·&nbsp; 경희대학교 &nbsp;·&nbsp; KAIST &nbsp;·&nbsp; 회기시장 &nbsp;·&nbsp;
-        회기 &nbsp;·&nbsp; 경희대학교 &nbsp;·&nbsp; KAIST &nbsp;·&nbsp; 회기시장 &nbsp;·&nbsp;
-        회기 &nbsp;·&nbsp; 경희대학교 &nbsp;·&nbsp; KAIST &nbsp;·&nbsp; 회기시장 &nbsp;·&nbsp;
-      </div>
-    </div>
-
-    <!-- 회기 Section -->
-    <section class="area-section fade-in-section" id="area-회기">
+    <section class="tab-panel area-section" id="area-회기">
       <div class="area-section-inner">
         <div class="area-section-header">
           <div class="area-num-big">02</div>
@@ -1377,30 +1460,11 @@
             <p class="area-count" id="count-회기">— 개의 장소</p>
           </div>
         </div>
-        <div class="filter-bar">
-          <span class="filter-label">필터:</span>
-          <button class="filter-btn active" onclick="filterCards(this,'회기','all')">전체</button>
-          <button class="filter-btn" onclick="filterCards(this,'회기','한식')">한식</button>
-          <button class="filter-btn" onclick="filterCards(this,'회기','일식')">일식</button>
-          <button class="filter-btn" onclick="filterCards(this,'회기','고기')">고기</button>
-          <button class="filter-btn" onclick="filterCards(this,'회기','카페')">카페·베이커리</button>
-          <button class="filter-btn" onclick="filterCards(this,'회기','주점')">주점</button>
-        </div>
         <div id="cards-회기" class="cards-grid"></div>
       </div>
     </section>
 
-    <!-- Marquee Divider -->
-    <div class="section-divider">
-      <div class="section-divider-text">
-        청량리 &nbsp;·&nbsp; 경동시장 &nbsp;·&nbsp; 시립대학교 &nbsp;·&nbsp; 청량리역 &nbsp;·&nbsp;
-        청량리 &nbsp;·&nbsp; 경동시장 &nbsp;·&nbsp; 시립대학교 &nbsp;·&nbsp; 청량리역 &nbsp;·&nbsp;
-        청량리 &nbsp;·&nbsp; 경동시장 &nbsp;·&nbsp; 시립대학교 &nbsp;·&nbsp; 청량리역 &nbsp;·&nbsp;
-      </div>
-    </div>
-
-    <!-- 청량리 Section -->
-    <section class="area-section fade-in-section" id="area-청량리">
+    <section class="tab-panel area-section" id="area-청량리">
       <div class="area-section-inner">
         <div class="area-section-header">
           <div class="area-num-big">03</div>
@@ -1423,6 +1487,9 @@
     <p style="margin-top:0.5rem; font-size:0.65rem;">2025년 3월 업데이트 · 개인 취향 기반 리스트이므로 입맛에 따라 다를 수 있습니다</p>
     <button class="back-to-top" onclick="showView('list')">↑ &nbsp; 맨 위로</button>
   </footer>
+
+  <!-- FIXED BACK TO TOP -->
+  <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="맨 위로">↑</button>
 
   <!-- MODAL -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
@@ -1630,12 +1697,70 @@
   `;
     }
 
-    // ── FILTER ──────────────────────────────────────────────────────
+    // ── TAB STATE ───────────────────────────────────────────────────
+    let activeTab = '이문동';
+    let activeFilter = 'all';
+
+    const catLabels = {
+      '한식': '한식', '중식': '중식', '양식': '양식', '일식': '일식',
+      '고기': '고기·해산물', '카페': '카페·베이커리', '주점': '주점'
+    };
+
+    function getAvailableCats(area) {
+      return [...new Set(data[area].map(d => d.cat))];
+    }
+
+    function renderFilterRow(area) {
+      const row = document.getElementById('cat-filter-row');
+      const cats = getAvailableCats(area);
+      row.innerHTML = `<span class="filter-label">필터</span>`;
+      ['all', ...cats].forEach(cat => {
+        const label = cat === 'all' ? '전체' : (catLabels[cat] || cat);
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn' + (cat === activeFilter ? ' active' : '');
+        btn.textContent = label;
+        btn.onclick = () => applyFilter(cat);
+        row.appendChild(btn);
+      });
+    }
+
+    function applyFilter(cat) {
+      activeFilter = cat;
+      renderFilterRow(activeTab);
+      renderCards(activeTab, cat);
+    }
+
+    function switchTab(area) {
+      // Update tab buttons
+      document.querySelectorAll('.region-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + area).classList.add('active');
+
+      // Update panels
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('area-' + area).classList.add('active');
+
+      // Reset filter, update state
+      activeTab = area;
+      activeFilter = 'all';
+
+      // Re-render filter row for new area
+      renderFilterRow(area);
+
+      // Re-render cards with 'all'
+      renderCards(area, 'all');
+
+      // Scroll to top of content
+      window.scrollTo({ top: document.getElementById('tabFilterBar').offsetTop - 60, behavior: 'smooth' });
+
+      // Sync map area buttons
+      document.querySelectorAll('.area-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.area === area);
+      });
+    }
+
+    // ── FILTER (legacy wrapper kept for compatibility) ────────────────
     function filterCards(btn, area, cat) {
-      const panel = document.getElementById('area-' + area);
-      panel.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderCards(area, cat);
+      applyFilter(cat);
     }
 
     // ── MODAL ───────────────────────────────────────────────────────
@@ -1736,19 +1861,14 @@
       // Navbar shadow
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
 
-      // Update area button based on scroll position
-      ['이문동', '회기', '청량리'].forEach(area => {
-        const el = document.getElementById('area-' + area);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top < 200 && rect.bottom > 200) {
-            document.querySelectorAll('.area-btn').forEach(b => {
-              b.classList.toggle('active', b.dataset.area === area);
-            });
-          }
-        }
-      });
+      // Back to top button visibility
+      const btn = document.getElementById('backToTop');
+      if (btn) btn.classList.toggle('visible', window.scrollY > 300);
     });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // ── INTERSECTION OBSERVER ───────────────────────────────────────
     const observer = new IntersectionObserver((entries) => {
@@ -1759,17 +1879,13 @@
 
     document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
 
-    // ── INIT: Loading sequence ───────────────────────────────────────
-    // 1. Show intro overlay + hero/about briefly
+    // ── INIT ────────────────────────────────────────────────────────
     document.body.classList.add('intro-mode');
 
     setTimeout(() => {
-      // 2. Fade out overlay
       const overlay = document.getElementById('introOverlay');
       overlay.classList.add('fade-out');
-
       setTimeout(() => {
-        // 3. Overlay fully gone — switch to list view
         overlay.style.display = 'none';
         showView('list');
       }, 650);
@@ -1778,6 +1894,7 @@
     renderCards('이문동');
     renderCards('회기');
     renderCards('청량리');
+    renderFilterRow('이문동');
   </script>
 </body>
 
