@@ -287,7 +287,7 @@
     }
 
     .about-note {
-      font-size: 1.5rem;
+      font-size: 1rem;
       color: rgba(255, 255, 255, 0.35);
       line-height: 2.1;
     }
@@ -379,7 +379,7 @@
     .area-btn {
       position: relative;
       padding: 0.9rem 1.4rem;
-      border: 1px solid #2a1810;
+      border: 1px solid #cfc3bd;
       font-family: 'Noto Sans KR', sans-serif;
       font-size: 0.8rem;
       font-weight: 400;
@@ -397,14 +397,14 @@
     .area-btn .area-num {
       font-family: 'DM Serif Display', serif;
       font-size: 1.1rem;
-      color: #2a1810;
+      color: rgba(255, 255, 255, 0.7);
       transition: color 0.2s;
       min-width: 1.5rem;
     }
 
     .area-btn:hover {
       border-color: var(--accent);
-      color: rgba(255, 255, 255, 0.7);
+      color: white;
     }
 
     .area-btn:hover .area-num {
@@ -1001,7 +1001,7 @@
     /* Intersection observer fade-in */
     .fade-in-section {
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(12px);
       transition: opacity 0.65s ease, transform 0.65s ease;
     }
 
@@ -1059,8 +1059,34 @@
         grid-template-columns: 1fr;
       }
 
+      /* 모바일: map-section을 화면의 55% 이하로 제한 */
       .map-section {
-        padding: 2.5rem 1rem;
+        padding: 1.8rem 1rem 1.5rem;
+        max-height: 55vh;
+      }
+
+      /* 모바일: 지도 SVG 숨김 → 버튼만 표시해서 공간 절약 */
+      .schematic-map {
+        display: none;
+      }
+
+      .map-section-inner {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .map-title {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .area-btn {
+        padding: 0.7rem 1rem;
+      }
+
+      /* 모바일: area-section 상단 패딩 줄여서 헤더가 일부 보이게 */
+      .area-section {
+        padding: 2.5rem 1rem 3rem;
       }
     }
   </style>
