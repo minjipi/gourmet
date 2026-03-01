@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이문·회기·청량리 맛집 가이드</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1008;
+      --ink2: #2d1f12;
+      --paper: #ffffff;
+      --paper2: #FCF0EC;
+      --paper3: #f5e0d8;
+      --muted: #8a6e65;
+      --muted2: #b8998f;
+      --border: #e8d5ce;
+      --border2: #d4b8af;
+      --accent: #fc602d;
+      --accent2: #FCF0EC;
+      --accent-dark: #d94a1a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Noto Sans KR', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      transition: box-shadow 0.3s;
+    }
+
+    .navbar.scrolled {
+      box-shadow: 0 4px 24px rgba(252, 96, 45, 0.08);
+    }
+
+    .navbar-brand {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .navbar-brand .dot {
+      color: var(--accent);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .navbar-brand:hover {
+      opacity: 0.7;
+    }
+
+    .navbar-menu {
+      display: flex;
+      gap: 0;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 0 1.4rem;
+      height: 60px;
+      border: none;
+      background: transparent;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+      text-transform: uppercase;
+    }
+
+    .nav-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--ink);
+    }
+
+    .nav-btn.active {
+      color: var(--accent);
+    }
+
+    .nav-btn.active::after {
+      transform: scaleX(1);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        linear-gradient(rgba(252, 96, 45, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(252, 96, 45, 0.3) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(252, 96, 45, 0.12) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      animation: heroFadeUp 1s ease both;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.68rem;
+      letter-spacing: 0.55em;
+      color: var(--accent);
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .hero-title {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 6vw, 5rem);
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-title .accent-dot {
+      color: var(--accent);
+    }
+
+    .hero-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      margin: 2rem auto;
+    }
+
+    .hero-sub {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: whitesmoke;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .hero-author {
+      margin-top: 0.6rem;
+      color: rgba(255, 255, 255, 0.22);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      animation: bounce 2s ease infinite;
+    }
+
+    .hero-scroll-hint svg {
+      opacity: 0.4;
+    }
+
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(6px);
+      }
+    }
+
+    /* ── ABOUT SECTION ── */
+    .about-section {
+      background: var(--ink);
+      padding: 5rem 2rem;
+      border-top: 1px solid #2a1810;
+    }
+
+    .about-section-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+    }
+
+    .about-note {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.35);
+      line-height: 2.1;
+    }
+
+    .about-note+.about-note {
+      margin-top: 1.1rem;
+    }
+
+    .about-note.warning {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1rem;
+      padding: 1rem 1.2rem;
+      border-left: 2px solid var(--accent);
+      background: rgba(252, 96, 45, 0.04);
+      margin-top: 1.5rem;
+    }
+
+    .legend-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
+
+    .legend-card {
+      padding: 1rem 1.2rem;
+      border: 1px solid #2a1810;
+      background: rgba(252, 96, 45, 0.03);
+    }
+
+    .legend-stars {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+      display: block;
+      letter-spacing: 0.1em;
+    }
+
+    .legend-desc {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.3);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── MAP SECTION ── */
+    .map-section {
+      background: var(--ink2);
+      padding: 5rem 2rem;
+      position: relative;
+      border-bottom: 1px solid #2a1810;
+    }
+
+    .map-section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .map-section-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .map-title-block .section-eyebrow {
+      color: var(--accent);
+    }
+
+    .map-title {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 2rem;
+    }
+
+    .area-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .area-btn {
+      position: relative;
+      padding: 0.9rem 1.4rem;
+      border: 1px solid #2a1810;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.35);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .area-btn .area-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: #2a1810;
+      transition: color 0.2s;
+      min-width: 1.5rem;
+    }
+
+    .area-btn:hover {
+      border-color: var(--accent);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .area-btn:hover .area-num {
+      color: var(--accent);
+    }
+
+    .area-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .area-btn.active .area-num {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Schematic Map */
+    .schematic-map {
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      display: block;
+      filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+    }
+
+    /* ── INFINITE SCROLL CONTENT ── */
+    .scroll-content {
+      background: var(--paper);
+    }
+
+    /* Area Section */
+    .area-section {
+      padding: 5rem 2rem;
+      border-bottom: 4px solid var(--border);
+    }
+
+    .area-section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .area-section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .area-num-big {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(4rem, 8vw, 7rem);
+      color: var(--accent2);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      user-select: none;
+    }
+
+    .area-title-group {
+      flex: 1;
+      padding-left: 1.5rem;
+    }
+
+    .area-section-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .area-section-title {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 900;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .area-count {
+      font-size: 0.72rem;
+      color: var(--muted2);
+      letter-spacing: 0.1em;
+      margin-top: 0.4rem;
+    }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+      position: sticky;
+      top: 60px;
+      z-index: 100;
+      background: var(--paper);
+      padding: 0.9rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .filter-label {
+      font-size: 0.65rem;
+      color: var(--muted2);
+      letter-spacing: 0.2em;
+      margin-right: 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .filter-btn {
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.15s;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Category group */
+    .cat-group {
+      margin-bottom: 3rem;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .category-tag {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 700;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      padding: 0.3rem 0.9rem;
+      background: var(--ink);
+      color: var(--accent2);
+      text-transform: uppercase;
+    }
+
+    .category-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Cards grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .card {
+      background: var(--paper);
+      padding: 1.8rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.2s ease;
+      transform-origin: bottom;
+    }
+
+    .card:hover {
+      background: var(--paper2);
+    }
+
+    .card:hover::before {
+      transform: scaleY(1);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-name {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .stars {
+      color: var(--accent);
+      font-size: 0.78rem;
+      flex-shrink: 0;
+      margin-left: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    .card-meta {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.6rem;
+      padding: 0.15rem 0.55rem;
+      letter-spacing: 0.04em;
+      border-radius: 0;
+    }
+
+    .badge-genre {
+      background: var(--paper2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .badge-loc {
+      background: transparent;
+      color: var(--muted2);
+      border: 1px solid var(--border2);
+    }
+
+    .card-comment {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.8;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-more {
+      margin-top: 0.7rem;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .card:hover .card-more {
+      opacity: 1;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 5, 3, 0.65);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--paper);
+      max-width: 580px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(252, 96, 45, 0.12), 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      background: var(--ink);
+      padding: 2.2rem 2rem;
+      color: #fff;
+      border-bottom: 3px solid var(--accent);
+      position: relative;
+    }
+
+    .modal-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .modal-name {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 900;
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .modal-stars {
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-section-title {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 600;
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      color: var(--muted2);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      margin-top: 1.5rem;
+    }
+
+    .modal-section-title:first-child {
+      margin-top: 0;
+    }
+
+    .modal-comment {
+      font-size: 0.9rem;
+      line-height: 2;
+      color: var(--ink2);
+    }
+
+    .modal-info {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      padding: 1.2rem;
+      background: var(--paper2);
+      border: 1px solid var(--border);
+    }
+
+    .modal-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .modal-info-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.38em;
+      color: var(--muted2);
+      text-transform: uppercase;
+    }
+
+    .modal-info-value {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 34px;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Scroll progress indicator */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 600;
+      transition: width 0.1s;
+      width: 0%;
+    }
+
+    /* Section dividers */
+    .section-divider {
+      background: var(--ink);
+      padding: 2.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      overflow: hidden;
+    }
+
+    .section-divider-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: rgba(255, 255, 255, 0.06);
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: var(--ink);
+      border-top: 3px solid var(--accent);
+      color: rgba(255, 255, 255, 0.25);
+      text-align: center;
+      padding: 4rem 2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      line-height: 2.2;
+    }
+
+    footer strong {
+      color: var(--accent);
+    }
+
+    footer .footer-logo {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 1.5rem;
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    /* Back to top */
+    .back-to-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding: 0.7rem 1.5rem;
+      border: 1px solid rgba(252, 96, 45, 0.3);
+      color: var(--accent);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: transparent;
+      font-family: 'Noto Sans KR', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .back-to-top:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* ── PAGE VIEW MODES ── */
+    /* intro: hero+about visible, main content hidden */
+    /* list: hero+about hidden, main content visible */
+    /* about: hero+about visible, main content hidden (no loading anim) */
+
+    .hero,
+    .about-section {
+      display: none;
+    }
+
+    body.intro-mode .hero,
+    body.intro-mode .about-section,
+    body.about-mode .hero,
+    body.about-mode .about-section {
+      display: block;
+    }
+
+    body.intro-mode .map-section,
+    body.intro-mode .section-divider,
+    body.intro-mode .scroll-content,
+    body.intro-mode footer,
+    body.about-mode .map-section,
+    body.about-mode .section-divider,
+    body.about-mode .scroll-content,
+    body.about-mode footer {
+      display: none;
+    }
+
+    /* Intro loading overlay */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease;
+    }
+
+    .intro-overlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-overlay-text {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 6vw, 4.5rem);
+      color: var(--accent);
+      letter-spacing: -0.03em;
+      animation: introTextPulse 1.5s ease;
+    }
+
+    @keyframes introTextPulse {
+      0% {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Animations */
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.94) translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Intersection observer fade-in */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--paper2);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    @media (max-width: 640px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 6vw, 5rem);
+      }
+
+      .navbar {
+        padding: 0 1rem;
+      }
+
+      .nav-btn {
+        padding: 0 0.8rem;
+        font-size: 0.68rem;
+      }
+
+      .area-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .area-num-big {
+        padding-left: 0;
+      }
+
+      .area-title-group {
+        padding-left: 0;
+      }
+
+      .legend-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-section {
+        padding: 2.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Intro Loading Overlay -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-overlay-text">이문동 10년차의 <br>이문회기청량리 맛집 리스트</div>
+  </div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-brand" onclick="showView('list')">이문·회기·청량리 맛집
+    </div>
+    <div class="navbar-menu">
+      <button class="nav-btn active" id="nav-list" onclick="showView('list')">LIST</button>
+      <button class="nav-btn" id="nav-about" onclick="showView('about')">소개</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">이문동 10년차의 맛집 리스트</p>
+      <h1 class="hero-title">이문동 10년차의 <br> 이문·회기·청량리 식당
+        <div class="hero-divider"></div>
+        <p class="hero-sub">식당 · 카페 · 술집 큐레이션</p>
+        <p class="hero-author">by 법학전문대학원 15기 이영우</p>
+    </div>
+    <div class="hero-scroll-hint">
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="12" height="18" rx="6" stroke="white" stroke-width="1.5" />
+        <circle cx="7" cy="6" r="2" fill="white" />
+      </svg>
+      SCROLL
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section" id="about">
+    <div class="about-section-inner">
+      <p class="section-eyebrow">About.</p>
+      <p class="about-note">이 근처 식당 등을 잘 모르실 타교 출신 원우님들을 위해, 이문동에서 20대의 전부를 보내는 중인 사람으로서 근방의 가게들 중 무난하게 갈만한 곳들을
+        정리해보았습니다.</p>
+      <p class="about-note">이미 잘 아실 유명 프랜차이즈 등은 제외하였고, 유명하더라도 제가 별로 좋아하지 않거나 가보지 않은 곳들은 제외하였으니 참조하셔서 즐거운 식사하시기 바랍니다.</p>
+      <p class="about-note warning">※ 이 문서는 맛집 리스트가 아닙니다. 이문동 근방에서 맛집을 기대하시면 안 됩니다. 본 리스트 등재 기준은 그나마 먹을만한 곳, 즉 &lt;이문동
+        근처에서 이 정도면 나쁘지 않지&gt;입니다. 저는 깔끔하고 담백한 음식을 좋아하고, 과한 조미료 사용을 선호하지 않습니다.</p>
+      <div class="legend-grid">
+        <div class="legend-card">
+          <span class="legend-stars">☆☆☆</span>
+          <span class="legend-desc">최애 단골집</span>
+        </div>
+        <div class="legend-card">
+          <span class="legend-stars">☆☆</span>
+          <span class="legend-desc">탈이문 — 특별히 추천, 멀리서도 올 만한 곳</span>
+        </div>
+        <div class="legend-card">
+          <span class="legend-stars">☆</span>
+          <span class="legend-desc">근방에서 가장 훌륭한 곳</span>
+        </div>
+        <div class="legend-card">
+          <span class="legend-stars" style="color:#3a2a20">—</span>
+          <span class="legend-desc">무난하게 먹을 만한 곳</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP SECTION -->
+  <div class="map-section" id="mapSection">
+    <div class="map-section-inner">
+      <div class="map-title-block">
+        <h2 class="map-title">지역 선택</h2>
+        <div class="area-buttons">
+          <button class="area-btn" data-area="이문동" onclick="scrollToArea('이문동'); setAreaActive(this)">
+            <span class="area-num">01</span> 이문동
+          </button>
+          <button class="area-btn" data-area="회기" onclick="scrollToArea('회기'); setAreaActive(this)">
+            <span class="area-num">02</span> 회기
+          </button>
+          <button class="area-btn" data-area="청량리" onclick="scrollToArea('청량리'); setAreaActive(this)">
+            <span class="area-num">03</span> 청량리
+          </button>
+        </div>
+      </div>
+
+      <!-- Schematic map -->
+      <svg class="schematic-map" viewBox="0 0 320 440" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="440" fill="#0d0605" rx="4" />
+        <line x1="0" y1="146" x2="320" y2="146" stroke="#1e0f09" stroke-width="1" />
+        <line x1="0" y1="293" x2="320" y2="293" stroke="#1e0f09" stroke-width="1" />
+        <line x1="80" y1="0" x2="80" y2="440" stroke="#1e0f09" stroke-width="1" />
+        <line x1="160" y1="0" x2="160" y2="440" stroke="#1e0f09" stroke-width="1" />
+        <line x1="240" y1="0" x2="240" y2="440" stroke="#1e0f09" stroke-width="1" />
+
+        <path d="M 55 0 Q 90 160 80 440" stroke="#1e0f09" stroke-width="6" fill="none" />
+        <path d="M 0 200 L 320 200" stroke="#1e0f09" stroke-width="5" fill="none" />
+        <path d="M 120 0 L 135 440" stroke="#1e0f09" stroke-width="4" fill="none" />
+
+        <!-- Region: 이문동 -->
+        <polygon id="region-이문동" class="map-region" points="65,35 185,28 195,165 75,175" fill="rgba(252,96,45,0.07)"
+          stroke="#3a2520" stroke-width="1" style="cursor:pointer" onmouseover="mapHover('이문동')"
+          onmouseout="mapUnhover('이문동')" onclick="scrollToArea('이문동'); syncAreaBtn('이문동')" />
+
+        <!-- Region: 회기 -->
+        <polygon id="region-회기" class="map-region" points="75,175 195,165 185,295 70,305" fill="rgba(252,96,45,0.07)"
+          stroke="#3a2520" stroke-width="1" style="cursor:pointer" onmouseover="mapHover('회기')"
+          onmouseout="mapUnhover('회기')" onclick="scrollToArea('회기'); syncAreaBtn('회기')" />
+
+        <!-- Region: 청량리 -->
+        <polygon id="region-청량리" class="map-region" points="40,305 170,295 160,385 30,395" fill="rgba(252,96,45,0.07)"
+          stroke="#3a2520" stroke-width="1" style="cursor:pointer" onmouseover="mapHover('청량리')"
+          onmouseout="mapUnhover('청량리')" onclick="scrollToArea('청량리'); syncAreaBtn('청량리')" />
+
+        <!-- Dots -->
+        <circle cx="130" cy="100" r="5" fill="rgba(252,96,45,0.9)" />
+        <circle cx="130" cy="100" r="11" fill="none" stroke="rgba(252,96,45,0.4)" stroke-width="1.2" />
+        <circle cx="130" cy="100" r="18" fill="none" stroke="rgba(252,96,45,0.15)" stroke-width="0.8" />
+        <text x="148" y="96" font-size="11" fill="rgba(252,96,45,0.9)" font-family="'Noto Sans KR', sans-serif"
+          font-weight="600">이문동</text>
+        <text x="148" y="109" font-size="8" fill="#5a3a2a" font-family="sans-serif">외대앞역</text>
+
+        <circle cx="128" cy="238" r="5" fill="#6a4a38" />
+        <circle cx="128" cy="238" r="11" fill="none" stroke="#6a4a38" stroke-width="1" />
+        <text x="144" y="234" font-size="11" fill="#6a4a38" font-family="'Noto Sans KR', sans-serif"
+          font-weight="600">회기</text>
+        <text x="144" y="247" font-size="8" fill="#3a2520" font-family="sans-serif">회기역</text>
+
+        <circle cx="95" cy="340" r="5" fill="#4a3028" />
+        <circle cx="95" cy="340" r="11" fill="none" stroke="#4a3028" stroke-width="1" />
+        <text x="111" y="336" font-size="11" fill="#4a3028" font-family="'Noto Sans KR', sans-serif"
+          font-weight="600">청량리</text>
+        <text x="111" y="349" font-size="8" fill="#3a2520" font-family="sans-serif">청량리역</text>
+
+        <path d="M 130 110 Q 132 180 128 226" stroke="#4a2515" stroke-width="1" stroke-dasharray="3,3" fill="none" />
+        <path d="M 128 248 Q 120 295 95 328" stroke="#4a2515" stroke-width="1" stroke-dasharray="3,3" fill="none" />
+
+        <text x="285" y="30" font-size="12" fill="#3a2520" font-family="sans-serif" text-anchor="middle">N</text>
+        <line x1="285" y1="34" x2="285" y2="50" stroke="#3a2520" stroke-width="1.5" />
+        <polygon points="285,50 281,40 289,40" fill="#4a3028" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- INFINITE SCROLL CONTENT -->
+  <div class="scroll-content" id="content">
+
+    <!-- 이문동 Section -->
+    <section class="area-section fade-in-section" id="area-이문동">
+      <div class="area-section-inner">
+        <div class="area-section-header">
+          <div class="area-num-big">01</div>
+          <div class="area-title-group">
+            <p class="area-section-eyebrow">한국외국어대학교 앞</p>
+            <h2 class="area-section-title">이문동</h2>
+            <p class="area-count" id="count-이문동">— 개의 장소</p>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <span class="filter-label">필터:</span>
+          <button class="filter-btn active" onclick="filterCards(this,'이문동','all')">전체</button>
+          <button class="filter-btn" onclick="filterCards(this,'이문동','한식')">한식</button>
+          <button class="filter-btn" onclick="filterCards(this,'이문동','중식')">중식</button>
+          <button class="filter-btn" onclick="filterCards(this,'이문동','양식')">양식</button>
+          <button class="filter-btn" onclick="filterCards(this,'이문동','일식')">일식</button>
+          <button class="filter-btn" onclick="filterCards(this,'이문동','고기')">고기·해산물</button>
+          <button class="filter-btn" onclick="filterCards(this,'이문동','카페')">카페·베이커리</button>
+          <button class="filter-btn" onclick="filterCards(this,'이문동','주점')">주점</button>
+        </div>
+        <div id="cards-이문동" class="cards-grid"></div>
+      </div>
+    </section>
+
+    <!-- Marquee Divider -->
+    <div class="section-divider">
+      <div class="section-divider-text">
+        회기 &nbsp;·&nbsp; 경희대학교 &nbsp;·&nbsp; KAIST &nbsp;·&nbsp; 회기시장 &nbsp;·&nbsp;
+        회기 &nbsp;·&nbsp; 경희대학교 &nbsp;·&nbsp; KAIST &nbsp;·&nbsp; 회기시장 &nbsp;·&nbsp;
+        회기 &nbsp;·&nbsp; 경희대학교 &nbsp;·&nbsp; KAIST &nbsp;·&nbsp; 회기시장 &nbsp;·&nbsp;
+      </div>
+    </div>
+
+    <!-- 회기 Section -->
+    <section class="area-section fade-in-section" id="area-회기">
+      <div class="area-section-inner">
+        <div class="area-section-header">
+          <div class="area-num-big">02</div>
+          <div class="area-title-group">
+            <p class="area-section-eyebrow">경희대학교 · 회기역</p>
+            <h2 class="area-section-title">회기</h2>
+            <p class="area-count" id="count-회기">— 개의 장소</p>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <span class="filter-label">필터:</span>
+          <button class="filter-btn active" onclick="filterCards(this,'회기','all')">전체</button>
+          <button class="filter-btn" onclick="filterCards(this,'회기','한식')">한식</button>
+          <button class="filter-btn" onclick="filterCards(this,'회기','일식')">일식</button>
+          <button class="filter-btn" onclick="filterCards(this,'회기','고기')">고기</button>
+          <button class="filter-btn" onclick="filterCards(this,'회기','카페')">카페·베이커리</button>
+          <button class="filter-btn" onclick="filterCards(this,'회기','주점')">주점</button>
+        </div>
+        <div id="cards-회기" class="cards-grid"></div>
+      </div>
+    </section>
+
+    <!-- Marquee Divider -->
+    <div class="section-divider">
+      <div class="section-divider-text">
+        청량리 &nbsp;·&nbsp; 경동시장 &nbsp;·&nbsp; 시립대학교 &nbsp;·&nbsp; 청량리역 &nbsp;·&nbsp;
+        청량리 &nbsp;·&nbsp; 경동시장 &nbsp;·&nbsp; 시립대학교 &nbsp;·&nbsp; 청량리역 &nbsp;·&nbsp;
+        청량리 &nbsp;·&nbsp; 경동시장 &nbsp;·&nbsp; 시립대학교 &nbsp;·&nbsp; 청량리역 &nbsp;·&nbsp;
+      </div>
+    </div>
+
+    <!-- 청량리 Section -->
+    <section class="area-section fade-in-section" id="area-청량리">
+      <div class="area-section-inner">
+        <div class="area-section-header">
+          <div class="area-num-big">03</div>
+          <div class="area-title-group">
+            <p class="area-section-eyebrow">경동시장 · 청량리역</p>
+            <h2 class="area-section-title">청량리</h2>
+            <p class="area-count" id="count-청량리">— 개의 장소</p>
+          </div>
+        </div>
+        <div id="cards-청량리" class="cards-grid"></div>
+      </div>
+    </section>
+
+  </div><!-- /scroll-content -->
+
+  <footer>
+    <span class="footer-logo">이문동 10년차의 이문회기청량리 식당</span>
+    <p><strong>식당 · 카페 · 술집 큐레이션 가이드</strong></p>
+    <p>by 법학전문대학원 15기 이영우 (한국외국어대학교 Language&amp;Diplomacy 16학번)</p>
+    <p style="margin-top:0.5rem; font-size:0.65rem;">2025년 3월 업데이트 · 개인 취향 기반 리스트이므로 입맛에 따라 다를 수 있습니다</p>
+    <button class="back-to-top" onclick="showView('list')">↑ &nbsp; 맨 위로</button>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <p class="modal-eyebrow" id="m-genre"></p>
+        <h2 class="modal-name" id="m-name"></h2>
+        <p class="modal-stars" id="m-stars"></p>
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info" id="m-info"></div>
+        <p class="modal-section-title">코멘트</p>
+        <p class="modal-comment" id="m-comment"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── DATA ──────────────────────────────────────────────────────────
+    const data = {
+      '이문동': [
+        { name: '광주회관', stars: '☆☆', genre: '한식', loc: '정문', cat: '한식', comment: '진한 맛의 광주식 백반. 주문한 메뉴와 함께 각종 손맛 좋은 반찬을 상 한가득 내어주심. 비싼 메뉴를 시키면 어리굴젓, 양념게장 등 더 좋은 반찬을 주시기도. 근방에서 괜찮은 생선구이(고등어, 가자미, 갈치 등)를 먹을 수 있는 몇 안되는 곳. 꼬막비빔밥도 자주 먹는 편. 계절마다 신선한 제철 재료를 공수해서 특선 메뉴로 내시기도 함. 봄에는 알배기 쭈꾸미, 여름에는 민어, 겨울에는 굴 무침·굴전 등.' },
+        { name: '맛집찾다차린맛집', stars: '☆', genre: '한식', loc: '정문', cat: '한식', comment: '역 건너편에 있던 오래된 노포 맛집. 최근 재개발로 정문으로 이전함. 식사 시간에는 나이 있으신 분들로 가득 참. 삼겹살, 보쌈, 김치찌개, 대구탕, 홍어삼합, 갑오징어 숙회 등. 그 외 다양한 식사류도 판매. 반주하기 좋은 곳.' },
+        { name: '알쏭달쏭맛집', stars: '', genre: '한식', loc: '정문(역건너)', cat: '한식', comment: '마찬가지로 역 건너편 오래된 노포 맛집. 양푼김치찌개, 대구/동태탕, 코다리구이 등.' },
+        { name: '자연밥상', stars: '', genre: '한식', loc: '후문(한예종)', cat: '한식', comment: '부담스럽지 않은, 담백한 식사를 하고 싶다면. 닭곰탕, 닭가슴살 스테이크, 순살 김치찌개, 두부비빔밥 등 판매. 채식도 가능. 부부 사장님들이 아주 친절하심. 가끔 마감 시간 즈음에 가면 김치찌개나 닭곰탕을 다음날 데워 먹으라고 무료로 포장해주시기도 함.' },
+        { name: '해송', stars: '☆', genre: '한식 해산물', loc: '후문(경희대)', cat: '한식', comment: '신선한 해산물로 만드는 한식. 도다리쑥국(봄 한정), 대구·우럭탕(매운/지리 모두 가능) 등 신선한 생선 한 마리를 통으로 넣어주는 생선탕을 가장 추천함. 맑고 시원한 국물로 해장하고 싶을 때 이만한 곳이 없음. 회덮밥, 전복해초, 멍게비빔밥 등도 아주 좋음. 교수님들이 많이 방문하시는 편.' },
+        { name: '행복한한끼(미성)', stars: '☆', genre: '복 요리·백반', loc: '도서관 뒤', cat: '한식', comment: '원래 복어요리만 하던 곳. 1층에서도 복매운탕, 복튀김 등 복어요리를 주문할 수 있음. 개인적으로는 복지리 추천. 국물이 진한데 시원해서 해장으로 제격임.' },
+        { name: '옛날할머니보쌈', stars: '', genre: '보쌈', loc: '정문', cat: '한식', comment: '합리적인 가격(9,500원)에 양도 맛도 괜찮은 보쌈 정식. 주문 시 보쌈, 김치, 된장찌개 제공. 이문과 회기에 다수의 할머니보쌈집이 존재하나 정문 2층이 원조로 보임.' },
+        { name: '산과들그리고달', stars: '', genre: '막국수·백반', loc: '정문', cat: '한식', comment: '외대 법학과 선배님이 하시는 막국수 겸 백반집. 막국수(물, 비빔)와 메밀전병이 가장 괜찮지만 보쌈, 제육정식 등도 먹을만함. 금액을 추가하면 가마솥밥으로 먹을 수 있음.' },
+        { name: '예향 칼국수', stars: '', genre: '칼국수', loc: '후문', cat: '한식', comment: '근방에 몇 없는 칼국수집.' },
+        { name: '다래정', stars: '☆☆', genre: '삼계탕', loc: '정문', cat: '한식', comment: '단돈 12,000원에 닭 한 마리가 통째로 들어가는 진득하고 담백한 녹두삼계탕. 닭도 아주 부드러움. 함께 나오는 김치, 오이무침, 마늘쫑 무침 등 반찬도 맛있음. 끓이는 데 시간이 걸리니 15~20분 전에 미리 전화 후 방문 추천. 역 앞 프랭크버거 옆 골목으로 들어가면 찾을 수 있음.' },
+        { name: '오뚜기부대찌개', stars: '', genre: '부대찌개', loc: '정문', cat: '한식', comment: '담백하고 깔끔한 맛의 부대찌개. 사장님이 매우 친절하심. 외대 부대찌개집 중 개인적으로 가장 좋아함.' },
+        { name: '일층집', stars: '', genre: '부대찌개', loc: '후문', cat: '한식', comment: '베이크드빈과 베이컨이 들어가는 스타일. 그래서 오뚜기보다 국물이 점도가 있는 편.' },
+        { name: '20년전통외대닭갈비', stars: '', genre: '닭갈비', loc: '정문', cat: '한식', comment: '외대 닭갈비 터줏대감.' },
+        { name: '영화장', stars: '☆☆☆', genre: '중화요리', loc: '정문', cat: '중식', comment: '이문동에서 가장 오래된 가게 중 하나로, 이문동의 몇 안되는 전국구 맛집. 먹어도 더부룩하지 않은 담백하고 정돈된 맛이 일품. 고추삼선간짜장, 삼선짬뽕밥, 양주볶음밥, 부추굴짬뽕(겨울), 냉짬뽕(여름)이 가장 훌륭. 제대로 된 볶음밥을 먹을 수 있는 거의 유일한 곳. 요리는 유린기, 난자완스, 오향장육을 가장 추천. 오향장육과 고량주의 조합이 아주 훌륭. 군만두는 수제로 육즙 가득, 바삭함.' },
+        { name: '촨커', stars: '', genre: '중국본토요리·양꼬치', loc: '후문(기숙사)', cat: '중식', comment: '중국 본토요리를 판매하는 곳. 꿔바로우, 지삼선 등이 맛있고 양꼬치도 괜찮음. 과거 푸딘코 소개 후 유명해지면서 맛이 좀 변했고 웨이팅이 있기도 함. 그래도 여전히 근처에서 중국요리를 먹고 싶다면 추천할 정도는 됨.' },
+        { name: '와까리꽁', stars: '☆', genre: '대만요리', loc: '정문', cat: '중식', comment: '7년 동안 대만에 계셨던 이문동 토박이 사장님이 여신 대만음식점. 대만 사람들도 대만 현지 맛이라고 인정하는 곳. 루로우판에 삼겹살 추가 추천. 직접 빚으신 훈툰(얇은 만두)도 맛있음. 점심에는 탕칭차이 할인.' },
+        { name: '야경면선', stars: '', genre: '대만요리', loc: '정문', cat: '중식', comment: '대만식 곱창국수 및 버블티.' },
+        { name: '헤이마오차이', stars: '', genre: '마라탕', loc: '정문', cat: '중식', comment: '대전 맛집 2호점.' },
+        { name: '사골마라탕', stars: '', genre: '마라탕', loc: '후문(경희대)', cat: '중식', comment: '상호대로 사골육수를 사용하는 마라탕집.' },
+        { name: '치보', stars: '☆', genre: '파스타', loc: '후문(한예종)', cat: '양식', comment: '인공조미료를 거의 쓰지 않는 깔끔한 맛의 자연주의 파스타. 이문동 앞에서 그나마 제일 괜찮은 파스타집. 따뜻하게 데워 나오는 식전빵(포카치아, 해초빵)이 훌륭함. 가끔 비정기적으로 바질페스토, 굴파스타, 부라타치즈, 모르타델라 파스타 등 특별메뉴를 하시는데, 기본메뉴보다 훨씬 맛있음.' },
+        { name: '브릴란테', stars: '', genre: '파스타·화덕피자', loc: '정문', cat: '양식', comment: '무난한 파스타집. 화덕이 있어서 화덕피자를 판다는 것이 차별점. 사실 살치살 스테이크(200g)를 가장 추천. 20,000원이라는 합리적인 가격에 나쁘지 않게 구운 스테이크를 먹을 수 있음.' },
+        { name: '번패티번', stars: '☆', genre: '수제버거', loc: '정문', cat: '양식', comment: '더현대 등에도 입점해 있는 수제버거집. 매장에서 직접 굽는 브리오슈번과 질 좋은 소고기 패티의 조합이 훌륭함. 얇은 튀김옷의 치킨패티가 들어간 치킨버거도 특색 있음. 가격이 핫플 가격이고 소스나 재료조합도 단조로운 편이라 자주 먹기는 좀 애매할 수 있음.' },
+        { name: '서울치즈피자', stars: '', genre: '피자', loc: '후문(경희대)', cat: '양식', comment: '가성비 피자집. 저렴한 가격, 나쁘지 않은 맛. 사장님도 친절하심.' },
+        { name: '마루기', stars: '', genre: '라멘·덮밥', loc: '정문', cat: '일식', comment: '냉라멘으로 유명한 무난한 일식 라멘 및 덮밥집. 냉라멘은 여름 외에도 상시 판매. 규동이나 부타쇼가야끼정식(돼지생강구이)이 괜찮고 돈까스가 의외로 괜찮음.' },
+        { name: '카시와', stars: '☆', genre: '라멘', loc: '정문', cat: '일식', comment: '라멘에 진심인 사장님이 운영하는 라멘집. <백종원의 골목식당: 이대편>, <흑백요리사>에 출연한 라멘 셰프와 함께 <가야가야(외대점)> 운영 이력. 공산품 육수는 절대 쓰지 않고 직접 12시간씩 육수를 끓임. 돈코츠라멘을 더 추천. 담백한 스타일의 돈코츠. 면을 다 먹으면 신동진쌀 밥을 조금 내어주심.' },
+        { name: '주수사', stars: '☆', genre: '스시', loc: '정문', cat: '일식', comment: '클래식한 스타일의 수사집. 다찌석에서 오마카세처럼 한 피스씩 초밥을 만들어주심 (모듬 19,000 / 특모듬 24,000). 잘 숙성된 횟감을 매우 두툼하게 썰어주는 것이 장점.' },
+        { name: '돼랑이우랑이', stars: '', genre: '돈카츠', loc: '정문(역건너)', cat: '일식', comment: '한국화 된 일식카츠. 가격도 저렴하고 동네에서 이만하면 아주 괜찮음.' },
+        { name: '기석일호', stars: '', genre: '일식카레', loc: '국학 뒤편', cat: '일식', comment: '직접 볶은 루와 직접 끓인 육수로 만드는 일본식 카레. 오믈렛 토핑을 가장 추천. 큼지막하게 만들어 올려주시는 고소한 오믈렛과 카레의 조합이 아주 괜찮음. 간단한 주류와 안주메뉴도 판매.' },
+        { name: '이상한떡볶이집', stars: '', genre: '경양식', loc: '정문', cat: '일식', comment: '메뉴 주문 시 떡볶이(쌀떡) 무료·무한리필이 특징. 그래서 이상한떡볶이집임. 오므라이스, 김치볶음밥 등이 괜찮음.' },
+        { name: '분99', stars: '', genre: '베트남', loc: '후문(한예종)', cat: '한식', comment: '한국식 베트남 쌀국수집. 깔끔한 양지 쌀국수와 토마토 해산물 칼국수, 분짜, 베트남 라이스 등 판매. 고수는 별도 요청 필요.' },
+        { name: '마살라키친', stars: '', genre: '인도', loc: '정문', cat: '한식', comment: '인도커리, 탄두리치킨, 라씨 등 각종 인도요리. 채식 가능. 커리와 난, 라씨가 포함된 1·2인 세트메뉴가 잘 되어있음. 양고기 커리류가 괜찮음.' },
+        { name: '새응배노', stars: '', genre: '몽골', loc: '한예종', cat: '한식', comment: '몽골식 소고기 만두, 몽골식 칼국수 등.' },
+        { name: '마포생주먹고기', stars: '☆☆☆', genre: '고기', loc: '정문(역건너)', cat: '고기', comment: '돼지목살과 붙어있는 특수부위인 주먹고기만 취급하는 이 근방 최고의 고기집. 지방 많은 부위, 중간, 적은 부위 중 선택 가능. 찍어먹을 양념(소금, 쌈장, 참소스, 콩가루)과 쌈(당귀, 배추, 깻잎, 케일 등)을 다양하게 주심. 콩가루와 참소스를 같이 찍어 먹으라고 추천. 꽃게를 넣어 끓인 된장찌개도 아주 시원하고 맛있음.' },
+        { name: '꼬기92', stars: '', genre: '고기', loc: '정문', cat: '고기', comment: '가격도 고기도 좋은 정육식당. 한 마리면 3인(일반 남성 기준)이 충분함. 한 마리가 반 마리의 거의 2배 양인데 가격차이는 만원 밖에 안 나서 웬만하면 한 마리 추천.' },
+        { name: '화덕고', stars: '', genre: '고기', loc: '정문', cat: '고기', comment: '화덕에서 초벌해서 나오는 돼지고기집. 메뉴 나오는 속도가 좀 느리니 식사나 고기 추가주문은 미리미리.' },
+        { name: '이문시장', stars: '', genre: '고기', loc: '정문', cat: '고기', comment: '예전보다 가격이 올랐지만 여전히 저렴한 돼지고기집. 사이드로 비빔라면 판매.' },
+        { name: '진미생고기전문점', stars: '', genre: '고기', loc: '정문', cat: '고기', comment: '상호명과 달리 양념돼지갈비가 괜찮음.' },
+        { name: '이문동그집', stars: '☆☆☆', genre: '한우·곱창전골', loc: '신이문', cat: '고기', comment: '신이문 본점이 유명해져서 회기역 파전골목에 직영점까지 차린 한우 및 소곱창전골 전문점. 한우를 30년 동안 다루신 사장님이 매일 아침 질 좋은 신선한 한우를 들여와 합리적인 가격에 판매. 한우차돌박이로 기름칠 후 소곱창전골에 소주 각 2병, 볶음밥까지 볶아먹으면 완벽. 한우설렁탕은 본점에서만 판매.' },
+        { name: '허브영양족발', stars: '☆', genre: '족발', loc: '정문', cat: '고기', comment: '베스킨라빈스 쪽 골목으로 들어가면 나오는 외대 전통의 족발 맛집. 불향 입힌 불족발이 유명하지만 기본 족발도 맛있음. 가게에서 먹으면 선지해장국과 작은 막국수 기본 제공.' },
+        { name: '숯불꼼닭발', stars: '', genre: '닭발', loc: '정문', cat: '고기', comment: '숯불향 가득한 닭발과 꼼장어집.' },
+        { name: '옹골진 치킨', stars: '', genre: '치킨', loc: '정문', cat: '고기', comment: '외대생들의 추억이 담긴 치킨집. 후라이드/양념/마늘간장 반반반 1.5마리 국룰.' },
+        { name: '59년 옛날통닭', stars: '', genre: '치킨', loc: '정문', cat: '고기', comment: '날씨 좋은 날에는 야장에서 옛날통닭과 함께 생맥을 즐길 수 있는 곳.' },
+        { name: '씨마트', stars: '☆', genre: '활어회', loc: '정문', cat: '고기', comment: '근방에서 제일 괜찮은 활어회집. 수조차를 가지고 있어서 직접 횟감을 공수. 퀄리티에 비해 가격도 굉장히 합리적. 근처에 고등어활어회 파는 곳이 여기 말고 거의 없으므로 고등어 추천.' },
+        { name: '고흥집', stars: '☆☆', genre: '해산물 이모카세', loc: '정문(역건너)', cat: '고기', comment: '역건너 해산물 이모카세 실비집. 인당 4~5만원에 손맛 좋은 이모님이 다양한 제철 해산물을 내주심. 가격이 있어 자주는 못 가지만 그 가격만큼 다양한 해산물을 배 터질 때까지 내어주심. 전화 예약 후 방문.' },
+        { name: '이문동커피집', stars: '☆☆☆', genre: '카페', loc: '도서관 뒤', cat: '카페', comment: '2016년 <플랫피플>로 시작해 이제는 로스터리 직접 운영, 석관동과 회기에도 지점이 있는 카페. 훌륭한 커피를 아주 합리적인 가격에 제공. 핸드드립은 3가지 싱글 오리진 원두 중 선택(최대 6,500원 내외). 에스프레소 계열은 기본 일상블렌드, 화사한 느낌 원하면 펼침블렌드 추천. 라떼 중에서는 아이스그것이 가장 많이 나감. 애플파이, 모카번, 메론빵, 에그타르트 등 디저트 퀄리티도 훌륭함.' },
+        { name: '코너샵 카페', stars: '☆', genre: '카페', loc: '후문(경희대)', cat: '카페', comment: '싱글오리진 에스프레소와 더치커피를 모두 취급. 드립백 구매 가능. 인도네시아와 브라질 쪽 원두를 취급하므로 고소한 계열 커피를 마시고 싶다면 특히 추천.' },
+        { name: '컴플리트커피', stars: '☆☆', genre: '카페', loc: '후문', cat: '카페', comment: '좋은 커피, 맛있는 디저트, 예쁘고 쾌적한 공간. 이문동에서 3가지를 모두 갖춘 유일한 카페. 핸드드립은 싱글오리진 세 가지 중 선택. 논-커피 중에는 진저레몬 에이드 추천(실제 레몬 스퀴즈 제조). 인근에서 디저트로는 최고. 특히 가벼운 질감의 티라미수가 정말 맛있음.' },
+        { name: '신보', stars: '', genre: '카페', loc: '도서관 뒤', cat: '카페', comment: '원피스 레일리를 닮은 사장님이 계신 힙한 인테리어의 카페. 무우스 블렌드 및 싱글오리진 에스프레소로만 제공(핸드드립 X).' },
+        { name: '스택레이어', stars: '', genre: '카페', loc: '후문', cat: '카페', comment: '친절한 사장님이 계신 카공하기 좋은 카페. 에스프레소 및 핸드드립 모두 있음.' },
+        { name: '아임파이', stars: '', genre: '디저트', loc: '정문', cat: '카페', comment: '파이/타르트 전문점. 좀 산뜻한 디저트가 먹고 싶다면 레몬치즈타르트 추천. 피스타치오타르트도 괜찮음. 1층과 지하에 공간이 넉넉해서 앉아서 먹을 수 있음.' },
+        { name: '포레스티', stars: '☆☆☆', genre: '파니니', loc: '후문(경희대)', cat: '카페', comment: '심플하지만 아주 훌륭한 파니니. 서울 전체로 봐도 이만한 파니니 많이 없고, 동북권 기준으로는 더더욱 그럼. 평일 10시 오픈하면 12시 반 전후로 보통 품절. 학기 중에는 더 빠를 수 있음. 먹고 싶다면 부지런할 것. 포장 가능.' },
+        { name: '용토끼', stars: '☆', genre: '비건 베이커리', loc: '기숙사 뒤', cat: '카페', comment: '비건 베이커리. 식빵, 통밀빵, 소금빵, 베이글, 스콘, 시나몬롤, 단팥빵, 샌드위치 등 다양한 비건베이커리 판매. 맛도 훌륭함. 인기메뉴는 빠르게 품절되므로 인스타그램 등에서 나오는 시간 미리 확인 추천. 핸드드립 커피도 제공.' },
+        { name: '스토이', stars: '', genre: '베이커리', loc: '정문', cat: '카페', comment: '프랑스 제과학교 출신 사장님이 하시는 조그마한 베이커리. 식빵, 소금빵, 휘낭시에, 마들렌, 케익 등을 소량씩 판매. 인기있는 메뉴는 낮에 금방 품절.' },
+        { name: '코노미', stars: '', genre: '베이커리', loc: '정문(역건너)', cat: '카페', comment: '근방의 괜찮은 개인 베이커리 중 가장 다양한 라인업. 치아바타, 깜빠뉴, 포카치아, 바게트, 소금빵, 식빵 등 식사빵 계열과 크로아상 등 페이스트리 계열, 케익, 타르트 등 판매.' },
+        { name: '기린포차', stars: '', genre: '포차', loc: '정문', cat: '주점', comment: '외대에서 가장 인기 많은 술집. 안주도 다 맛있음. 다만 평균 연령대가 너무 어려서 기 빨릴 수 있으니 대학원생들은 주의 요망.' },
+        { name: '1988', stars: '', genre: '포차', loc: '정문', cat: '주점', comment: '개강 초나 행사 시즌이 아니면 자리도 널널하고 안주도 괜찮아서 추천하는 편.' },
+        { name: '꼴꼴', stars: '', genre: '포차', loc: '정문', cat: '주점', comment: '최근에 생긴 포차 중에는 제일 괜찮은 듯.' },
+        { name: '울랄라빈대떡', stars: '', genre: '전집', loc: '한예종', cat: '주점', comment: '비오는 날 전에 막걸리 먹고 싶으면 여기로. 영업도 늦게까지 함.' },
+        { name: '락앤밤', stars: '', genre: 'Bar·Pub', loc: '정문', cat: '주점', comment: '이문동에서 제일 무난하게 갈만한 바/펍. 위스키, 칵테일, 맥주, 와인 4가지 주종 모두 판매. 신청곡도 틀어주심. 주류 주문 시 팝콘, 감자칩, 크래커 중 한 가지 기본 안주 제공.' },
+        { name: '젠바(Zen Bar)', stars: '', genre: 'Bar', loc: '정문', cat: '주점', comment: '위스키에 진심이라면 여기를 더 추천. 한국에서 구하기 어려운 고가·한정판 위스키, 독립병입 위스키, 한국 위스키 등을 잔뜩 비치. 인스타를 팔로우 하면 매일 다른 위스키를 <오늘의 위스키>로 할인해서 판매.' },
+        { name: '탐스비어', stars: '', genre: 'Pub', loc: '정문', cat: '주점', comment: '이문동에서 포켓볼 칠 수 있는 유일한 펍.' },
+        { name: '미바드래프트', stars: '', genre: '수제맥주', loc: '후문', cat: '주점', comment: '괜찮은 수제맥주. 카페 정도의 조도라 가끔 음주 공부하기도 괜찮음. 콤부차, 드립 커피 등 논알콜 음료와 간단한 안주도 판매.' },
+        { name: '아쿠아', stars: '', genre: '수제맥주', loc: '정문', cat: '주점', comment: '4종의 수제맥주와 함께 소주와 여러 안주도 판매하는 무난하게 괜찮은 호프집. 생맥주 피처에 소주 타달라고 요청하면 그렇게 타 주심.' },
+      ],
+      '회기': [
+        { name: '도읍지', stars: '☆', genre: '한식 백반', loc: '경희대', cat: '한식', comment: '제육, 계란찜, 된장찌개 백반 등으로 유명. 20대 초중반의 평균적인 입맛에 잘 맞는 \'적당히 달고 자극적이면서도 깔끔한 맛\'을 내는 곳.' },
+        { name: '79번지 국수집', stars: '☆', genre: '국수', loc: '경희대', cat: '한식', comment: '근방에서 제일 괜찮은 국수집. 여름에 시원한 김치말이국수나 초계국수가 먹고 싶을 때 이만한 곳이 없음. 소면이 아닌 중면을 쓰는데 면을 상당히 잘 삶으심. 냉국수만 파는 게 아니고 닭곰탕, 닭칼국수, 비빔국수 등도 판매. 각자 국수 하나씩에 전 하나, 동동주 하나 시켜 먹으면 아주 훌륭함.' },
+        { name: '레알라면', stars: '', genre: '라면', loc: '회기시장', cat: '한식', comment: '원래 외대앞에 있다가 회기시장으로 이전한 유명 라면집. 옐로우-레드-오렌지로 맵기 조절 가능. 공기밥 및 셀프바 토핑 무제한.' },
+        { name: '봉이만두', stars: '☆☆', genre: '수제만두', loc: '회기역 건너편', cat: '한식', comment: '10년 연속 블루리본을 받은 부추만두 맛집. 찐만두와 군만두, 김치만두를 팔고, 그 중에서도 무쇠팬에 구워주시는 군만두가 정말 일품. 앉아서 먹기에는 가게가 협소하고 포장해서 먹어야 함. 인기가 많아 금방 소진될 수 있으니 전화로 품절 여부 확인 후 포장 주문 추천.' },
+        { name: '라구퀸', stars: '', genre: '파스타', loc: '경희대 삼거리', cat: '한식', comment: '상호대로 라구 파스타, 라자냐 등이 괜찮은 파스타집. 다만 오리지널 까르보나라, 엔초비, 바질페스토 파스타 등도 판매함. 외대 앞 파스타집이 질릴 때 가끔 갈만한 곳.' },
+        { name: '브랫패스트', stars: '', genre: '핫도그·아이스크림', loc: '회기시장', cat: '한식', comment: '뉴욕 스타일 핫도그집. 함께 파는 소프트 아이스크림이 가끔 진짜 생각남. 맥도날드보다는 당연히 맛있고, 상하목장보다 좀 더 부드럽고 진한 느낌.' },
+        { name: '오관스시', stars: '☆', genre: '스시', loc: '카이스트', cat: '일식', comment: '인근에서 가장 유명한 초밥집. 가성비 오마카세 스타일로 한 피스씩 초밥을 내어주심(런치 18,000 / 디너 23,000). 확실히 그 가격대에서 먹을 수 있는 최상의 맛. 타이밍이 안 맞으면 웨이팅이 길 수 있고 사장님 컨디션에 따라 기복이 좀 있다는 평.' },
+        { name: '스시선생', stars: '', genre: '스시', loc: '회기시장', cat: '일식', comment: '밸런스 괜찮은 스시집. 주수사 대신 더 일반적인 판초밥집 가고 싶다면 괜찮은 선택.' },
+        { name: '회기링고(스시 히노하루)', stars: '☆', genre: '이자카야·일식 덮밥', loc: '회기시장', cat: '일식', comment: '1층에서는 오마카세 스시야(히노하루), 2층에서는 일식 덮밥집 겸 이자카야를 운영하는 곳.' },
+        { name: '키친 요로시쿠', stars: '', genre: '일본 가정식', loc: '경희대', cat: '일식', comment: '근방에서 찾기 어려운 일본 가정식집. 치킨난반이 가장 훌륭함. 연어 메뉴는 특정 요일 한정으로만 주문 가능하다고 하니 참조.' },
+        { name: '카츠정연', stars: '☆☆', genre: '일식카츠', loc: '회기역 사거리', cat: '일식', comment: '현재 인근 일식카츠집 중 1등. 누가 봐도 섬세하고 자기주관이 뚜렷한 사장님이 만드는 부드러운 저온조리 카츠. 로스(등심)도 좋지만 히레(안심)에 훨씬 강점이 있음.' },
+        { name: '시키카츠', stars: '☆', genre: '일식카츠', loc: '카이스트', cat: '일식', comment: '근방에서 가장 유명한 카츠집. 다만 조리 컨디션에 기복이 좀 있어서 명성에 비해 맛이 별로라는 느낌이 들 때가 많음. 그에 비해 웨이팅이 과한 편. 그래도 주변에서 돈카츠를 먹고 싶다면 빼기 어려운 선택지.' },
+        { name: '언니네함바그', stars: '', genre: '함박스테이크', loc: '청량초', cat: '한식', comment: '외대 정문에서 청량초 앞으로 이전한 함박스테이크집. 무난하게 맛있음.' },
+        { name: '타께리아 라 비다', stars: '☆', genre: '멕시칸', loc: '카이스트', cat: '한식', comment: '멕시코 조리학과 출신 셰프와 멕시코 현지인 셰프가 만드는 정통 멕시코 음식점. 타코 외에도 케사디야, 알람브레, 새우 세비체 등 다양한 멕시코 현지 스타일 요리 판매. 밀가루와 옥수수 또띠아 중 선택 가능.' },
+        { name: '무초타코', stars: '', genre: '멕시칸', loc: '회기 가는 길', cat: '한식', comment: '미국식 타코집. 가성비가 괜찮은 편이라 가볍게 한 끼 떼우고 싶을 때 먹기 나쁘지 않음. 매장에서 먹으면 망고살사가 올라간 새우 타코, 포장 시 돼지고기 부리또 추천.' },
+        { name: '장군집', stars: '', genre: '고기', loc: '회기시장', cat: '고기', comment: '회기 유명 갈매기살 전문점. 다만, 손님이 많아 직접 구워주는 경우 별로 없어서 고기 잘 구울 자신 없으면 감안할 것.' },
+        { name: '회기왕족발보쌈', stars: '☆☆', genre: '족발·보쌈', loc: '회기역 사거리', cat: '고기', comment: '40년 동안 회기를 지켜온 터줏대감 맛집. 부드럽고 쫀득한 족발과 보쌈 자체도 훌륭하지만 보쌈과 함께 나오는 보쌈김치로 더 유명함. 돌돌 말아둔 김치 위에 턱턱 양념이 올려져 나오는 비주얼이 압도적.' },
+        { name: '계림원', stars: '', genre: '치킨', loc: '파전골목', cat: '고기', comment: '무난한 누룽지통닭집. 콘-치즈 다 추가된 메뉴로 먹는 것 추천. 열무김치랑 잘 어울림.' },
+        { name: '홍곱창', stars: '', genre: '곱창', loc: '청량초', cat: '고기', comment: '데리야끼 막창으로 유명. 웨이팅 주의.' },
+        { name: '이문동그집(회기 직영점)', stars: '☆☆☆', genre: '한우·곱창전골', loc: '파전골목', cat: '고기', comment: '신이문 이문동그집의 회기 직영점. 본점과 맛 똑같은데 가게는 더 넓고 쾌적함.' },
+        { name: '씨위드커피', stars: '☆', genre: '카페', loc: '회기시장', cat: '카페', comment: '드립커피가 싸고 맛있는 카페. 브라질, 파푸아뉴기니, 인도네시아 등 산미 적은 고소한 싱글오리진 원두들을 핸드드립으로 제공하는 것이 차별점. 커피 외에 티백 종류도 다양한 편.' },
+        { name: '부록', stars: '☆☆', genre: '카페', loc: '경희대', cat: '카페', comment: '이문동커피집 회기점. 도읍지와 키친요로시쿠 바로 옆 골목에 있음.' },
+        { name: '컴투레스트', stars: '☆', genre: '카페', loc: '회기시장', cat: '카페', comment: '6~7종류의 다양한 싱글오리진/블렌드 원두를 드립으로 제공. 에스프레소 계열도 괜찮음. 바스크치즈케이크, 티라미수, 판나코타 등 디저트 괜찮음. 특히 판나코타로 유명함. 다만 인기에 비해 좌석이 협소.' },
+        { name: '964커피로스터리', stars: '☆☆☆', genre: '카페·베이커리', loc: '카이스트', cat: '카페', comment: '(구)콩방빵공방, 너만보여크루아상. 크루아상, 퀸아망 등 페이스트리와 식빵, 치아바타, 미니바게트 등 담백한 계열의 빵을 모두 판매하는 카페 겸 베이커리. 인근 베이커리 중 가장 완성도 높음. 소금빵은 웬만한 유명 베이커리와 모두 견줄 수 있음. 우유 소금빵 추천.' },
+        { name: '와요(WAYO)', stars: '☆', genre: '수제 아이스크림', loc: '경희대 앞', cat: '카페', comment: '경희대 앞에서 10년 넘게 영업한 수제 아이스크림 가게. 다양한 맛 있음. 아이스크림 먹고 싶으면 베스킨라빈스 대신 이곳으로.' },
+        { name: '무드베이킹', stars: '', genre: '디저트', loc: '청량초 앞', cat: '카페', comment: '외대 앞에 없는 다양한 종류의 디저트 판매. 두바이 초콜릿, 쿠키슈, 다양한 맛의 에그타르트, 까눌레, 케익 등.' },
+        { name: '벨리스', stars: '', genre: '비건 디저트', loc: '회기', cat: '카페', comment: '비건 디저트 가게. 크럼블, 비스코티, 쿠키, 브라우니, 판나코타 등 판매.' },
+        { name: '빙고앤샐러드', stars: '', genre: '빙수·샐러드', loc: '회기', cat: '카페', comment: '빙수 겸 샐러드집. 빙수는 늦봄~초가을에만. 설빙보다 맛있고 가격도 합리적. 샐러드가 생각보다 괜찮은데, 특히 시래기잡곡밥이 맛있으므로 추가해서 먹길 추천.' },
+        { name: '오뚝(회기)', stars: '', genre: '한식 주점', loc: '회기역 사거리', cat: '주점', comment: '다양한 전통주를 구비하고 있는 캐주얼한 주점. 안주도 나쁘지 않음.' },
+        { name: '이모네골뱅이', stars: '', genre: '한식 주점', loc: '회기', cat: '주점', comment: '1차 이후 배부를 때 간단하게 2~3차로 골뱅이에 소주 한 잔 하기 괜찮음.' },
+        { name: '빅문', stars: '', genre: '수제맥주', loc: '회기', cat: '주점', comment: '주기적으로 바뀌는 6~7종의 수제맥주와 맥주에 어울리는 안주를 파는 수제맥주집. 청량초 옆에 와인전문 2호점도 있음.' },
+      ],
+      '청량리': [
+        { name: '경동시장평양냉면', stars: '☆☆', genre: '냉면', loc: '경동시장', cat: '한식', comment: '입문용으로 좋은 평양냉면집. 약간 탁한 듯 진한 고기 육수에 간이 적당히 되어있고 한약재향도 좀 남. 전분비율이 좀 높은 편이라 어느 정도 탄력과 두께감이 있는 스타일의 면. 사이드로 수육, 녹두전, 만두가 있으며 개인적으로는 만두를 가장 추천. 얇은 피의 육즙 가득한 스타일.' },
+        { name: '포천메밀냉면', stars: '☆☆', genre: '냉면', loc: '경동시장', cat: '한식', comment: '평양냉면(혹은 막국수) 노포. 소육수에 동치미 육수가 적당히 섞인 구수하고 산미 있는 스타일. 수육은 낮은 온도감에도 촉촉하면서 쫀득함. 수육 2인 이상 방문하면 가급적 大자 시킬 것.' },
+        { name: '안동집손칼국시', stars: '☆☆', genre: '국수', loc: '경동시장', cat: '한식', comment: '<흑백요리사> 출연 이모카세 1호 님이 운영하는 안동국시집. 점심에 가는 것 추천. 손국시, 수육, 배추전 모두 슴슴하고 담백하지만 깊이 있는 맛. 배추전이 기대 이상으로 맛있었음.' },
+        { name: '혜성칼국수', stars: '☆', genre: '칼국수', loc: '청량리역', cat: '한식', comment: '구수한 느낌의 칼국수집. 멸치칼국수와 닭칼국수 두 가지 메뉴만 있음.' },
+        { name: '고향집', stars: '☆☆', genre: '순대국밥', loc: '경동시장', cat: '한식', comment: '진짜 제대로 된 순대국집. 양도 맛도 훌륭함. 2인 이상 방문해서 순대정식 주문 추천.' },
+        { name: '전현필식당', stars: '☆☆', genre: '양식', loc: '청량리역 건너', cat: '한식', comment: '호텔 출신 셰프님이 조리하는 양식당. 파스타, 리조또, 스테이크 모두 담백하고 퀄리티 훌륭함. 트러플 버섯 크림 리조또, 라구 볼로네제, 참나물 조개 스파게티 등이 대표 메뉴.' },
+        { name: '남원통닭', stars: '☆☆', genre: '치킨', loc: '경동시장', cat: '한식', comment: '<성시경의 먹을텐데>, <홍석천·이원일> 등 다수 맛집 유튜브 및 방송에 출연한 전국구 유명 치킨집. 너무 유명해서 특히 주말에는 웨이팅이 다소 길 수 있음.' },
+        { name: '홍능족발', stars: '☆☆', genre: '족발', loc: '청량리역', cat: '한식', comment: '튀김족발 맛집. 두꺼운 튀김옷이 붙어있는 스타일은 아니고 족발 자체를 튀긴 듯함. 후라이드 치킨맛이 나는 족발이랄까.' },
+        { name: '슈퍼내추럴', stars: '☆☆', genre: '카페', loc: '청량리역 건너', cat: '카페', comment: '업계 고인물 사장님이 운영하는 카페. 기본 에스프레소도 너무 훌륭하고, 무엇보다 인근에서 한잔 당 2만원 내외의 고급 원두(드립)를 경험할 수 있는 유일한 곳. 사장님이 손님들과 대화하는 것도 좋아하고 손님들끼리도 대화가 활발한 편.' },
+        { name: '청량회관', stars: '☆☆', genre: '이자카야', loc: '시립대', cat: '주점', comment: '해산물 중심의 맛있고 널찍한 이자카야. 특히 참치 맛집이고 튀김, 볶음, 국물, 파스타 등 타 안주도 훌륭함. 주류 라인업도 괜찮음.' },
+      ]
+    };
+
+    // ── RENDER ──────────────────────────────────────────────────────
+    function getCatLabel(cat) {
+      const map = { '한식': '한식', '중식': '중식', '양식': '양식', '일식': '일식', '고기': '고기·해산물', '카페': '카페·베이커리', '주점': '주점' };
+      return map[cat] || cat;
+    }
+
+    function renderCards(area, filter = 'all') {
+      const container = document.getElementById('cards-' + area);
+      const countEl = document.getElementById('count-' + area);
+      if (!container) return;
+      const allItems = data[area];
+      const items = filter === 'all' ? allItems : allItems.filter(d => d.cat === filter);
+
+      if (countEl) {
+        const total = filter === 'all' ? allItems.length : items.length;
+        countEl.textContent = `${total}개의 장소`;
+      }
+
+      // Group by cat if showing all
+      if (filter === 'all') {
+        const cats = [...new Set(allItems.map(d => d.cat))];
+        let html = '';
+        cats.forEach(cat => {
+          const catItems = allItems.filter(d => d.cat === cat);
+          html += `
+        <div class="cat-group">
+          <div class="category-header">
+            <span class="category-tag">${getCatLabel(cat)}</span>
+            <div class="category-line"></div>
+          </div>
+          <div class="cards-grid">
+            ${catItems.map(d => cardHTML(d)).join('')}
+          </div>
+        </div>
+      `;
+        });
+        container.innerHTML = html;
+        container.style.background = 'transparent';
+        container.style.border = 'none';
+        container.style.gap = '2rem';
+        container.style.display = 'block';
+      } else {
+        container.innerHTML = items.map(d => cardHTML(d)).join('');
+        container.style.display = 'grid';
+      }
+    }
+
+    function cardHTML(d) {
+      return `
+    <div class="card" onclick="openModal(${JSON.stringify(d).replace(/"/g, '&quot;')})">
+      <div class="card-top">
+        <div class="card-name">${d.name}</div>
+        <div class="stars">${d.stars}</div>
+      </div>
+      <div class="card-meta">
+        <span class="badge badge-genre">${d.genre}</span>
+        <span class="badge badge-loc">📍 ${d.loc}</span>
+      </div>
+      <div class="card-comment">${d.comment}</div>
+      <div class="card-more">자세히 보기 →</div>
+    </div>
+  `;
+    }
+
+    // ── FILTER ──────────────────────────────────────────────────────
+    function filterCards(btn, area, cat) {
+      const panel = document.getElementById('area-' + area);
+      panel.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCards(area, cat);
+    }
+
+    // ── MODAL ───────────────────────────────────────────────────────
+    function openModal(d) {
+      document.getElementById('m-genre').textContent = d.genre + ' · ' + d.loc;
+      document.getElementById('m-name').textContent = d.name;
+      document.getElementById('m-stars').textContent = d.stars || '(별점 없음)';
+      document.getElementById('m-info').innerHTML = `
+    <div class="modal-info-item"><span class="modal-info-label">장르</span><span class="modal-info-value">${d.genre}</span></div>
+    <div class="modal-info-item"><span class="modal-info-label">위치</span><span class="modal-info-value">${d.loc}</span></div>
+    <div class="modal-info-item"><span class="modal-info-label">추천도</span><span class="modal-info-value">${d.stars || '무난'}</span></div>
+  `;
+      document.getElementById('m-comment').textContent = d.comment;
+      document.getElementById('modal-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+    }
+    function closeModalDirect() {
+      document.getElementById('modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+    // ── AREA BUTTONS ────────────────────────────────────────────────
+    function mapHover(area) {
+      const el = document.getElementById('region-' + area);
+      if (!el) return;
+      el.setAttribute('fill', 'rgba(252,96,45,0.35)');
+      el.setAttribute('stroke', 'rgba(252,96,45,0.9)');
+      el.setAttribute('stroke-width', '2');
+    }
+
+    function mapUnhover(area) {
+      const el = document.getElementById('region-' + area);
+      if (!el) return;
+      el.setAttribute('fill', 'rgba(252,96,45,0.07)');
+      el.setAttribute('stroke', '#3a2520');
+      el.setAttribute('stroke-width', '1');
+    }
+
+    function setAreaActive(el) {
+      document.querySelectorAll('.area-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function syncAreaBtn(area) {
+      document.querySelectorAll('.area-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.area === area);
+      });
+      scrollToArea(area);
+    }
+
+    function scrollToArea(area) {
+      const el = document.getElementById('area-' + area);
+      if (el) {
+        const offset = 120;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+
+    // ── VIEW SYSTEM ─────────────────────────────────────────────────
+    let currentView = 'list';
+
+    function showView(view) {
+      currentView = view;
+      document.body.classList.remove('intro-mode', 'about-mode', 'list-mode');
+
+      if (view === 'about') {
+        document.body.classList.add('about-mode');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('nav-list').classList.remove('active');
+        document.getElementById('nav-about').classList.add('active');
+      } else {
+        // list mode
+        document.body.classList.add('list-mode');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('nav-list').classList.add('active');
+        document.getElementById('nav-about').classList.remove('active');
+      }
+    }
+
+    // ── SCROLL EVENTS ───────────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+      if (currentView !== 'list') return;
+
+      // Progress bar
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      document.getElementById('scrollProgress').style.width = progress + '%';
+
+      // Navbar shadow
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+
+      // Update area button based on scroll position
+      ['이문동', '회기', '청량리'].forEach(area => {
+        const el = document.getElementById('area-' + area);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < 200 && rect.bottom > 200) {
+            document.querySelectorAll('.area-btn').forEach(b => {
+              b.classList.toggle('active', b.dataset.area === area);
+            });
+          }
+        }
+      });
+    });
+
+    // ── INTERSECTION OBSERVER ───────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+
+    // ── INIT: Loading sequence ───────────────────────────────────────
+    // 1. Show intro overlay + hero/about briefly
+    document.body.classList.add('intro-mode');
+
+    setTimeout(() => {
+      // 2. Fade out overlay
+      const overlay = document.getElementById('introOverlay');
+      overlay.classList.add('fade-out');
+
+      setTimeout(() => {
+        // 3. Overlay fully gone — switch to list view
+        overlay.style.display = 'none';
+        showView('list');
+      }, 650);
+    }, 1800);
+
+    renderCards('이문동');
+    renderCards('회기');
+    renderCards('청량리');
+  </script>
+</body>
+
+</html>
