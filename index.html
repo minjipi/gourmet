@@ -892,26 +892,41 @@
 
     /* Back to top */
     .back-to-top {
-      display: inline-flex;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 400;
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
-      padding: 0.7rem 1.5rem;
-      border: 1px solid rgba(252, 96, 45, 0.3);
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(252, 96, 45, 0.5);
+      border-radius: 50%;
       color: var(--accent);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      font-size: 1.1rem;
       cursor: pointer;
-      background: transparent;
-      font-family: 'Noto Sans KR', sans-serif;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(252, 96, 45, 0.15);
       transition: all 0.2s;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
     }
 
     .back-to-top:hover {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
+      box-shadow: 0 6px 20px rgba(252, 96, 45, 0.35);
     }
 
     /* ── PAGE VIEW MODES ── */
@@ -1354,8 +1369,10 @@
     <p><strong>식당 · 카페 · 술집 큐레이션 가이드</strong></p>
     <p>by 법학전문대학원 15기 이영우 (한국외국어대학교 Language&amp;Diplomacy 16학번)</p>
     <p style="margin-top:0.5rem; font-size:0.65rem;">2025년 3월 업데이트 · 개인 취향 기반 리스트이므로 입맛에 따라 다를 수 있습니다</p>
-    <button class="back-to-top" onclick="showView('list')">↑ &nbsp; 맨 위로</button>
   </footer>
+
+  <!-- FIXED BACK TO TOP -->
+  <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="맨 위로">↑</button>
 
   <!-- MODAL -->
   <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
@@ -1657,6 +1674,10 @@
       // Navbar shadow
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
 
+      // Back to top button visibility
+      const btn = document.getElementById('backToTop');
+      if (btn) btn.classList.toggle('visible', window.scrollY > 300);
+
       // Update area button based on scroll position
       ['이문동', '회기', '청량리'].forEach(area => {
         const el = document.getElementById('area-' + area);
@@ -1670,6 +1691,10 @@
         }
       });
     });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // ── INTERSECTION OBSERVER ───────────────────────────────────────
     const observer = new IntersectionObserver((entries) => {
